@@ -29,7 +29,9 @@ void Engine::Update()
 	while (window -> pollEvent(event)) // Any event occur
 	{
 		// close event
-		//if (event.type == sf::Event::Closed) window.close();
+		// 
+		// if (event.type == sf::Event::Closed) window.close();
+		//
 		switch (event.type)
 		{
 		case sf::Event::Closed:
