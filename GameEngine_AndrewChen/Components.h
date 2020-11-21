@@ -22,8 +22,22 @@ public:
 	sf::Sprite sprite;
 	std::string texture; // File path
 	unsigned int width, height;
-	Sprite2D() {//int width, int height
+	Sprite2D(std::string filePath) {//int width, int height
+		texture = filePath;
+	}
+};
+ECS_DEFINE_TYPE(Sprite2D);
 
+struct Collision
+{
+public:
+	ECS_DECLARE_TYPE;
+	float width, height;
+	Collision() {//int width, int height
+
+	}
+	bool detect() {
+		return true;
 	}
 };
 ECS_DEFINE_TYPE(Sprite2D);
