@@ -39,7 +39,7 @@ sf::Texture* RenderSystem::LoadTexture(std::string filePath)
 {
 	sf::Texture* texture = new sf::Texture();
 	if (!texture->loadFromFile(filePath)) {
-		std::cerr << "Error: "<<filePath << " Not Found!\nPlease correct this error."<< std::endl;
+		std::cerr << "Error: " << filePath << " Not Found!\nPlease correct this error." << std::endl;
 		system("pause");
 		exit(EXIT_FAILURE);
 	}

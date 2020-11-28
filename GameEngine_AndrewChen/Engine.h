@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include "ECS.h"
 #include "Components.h"
+#include "Systems/RenderSystem.h"
+#include "Systems/AnimationSystem.h"
 class Engine
 {
 public:

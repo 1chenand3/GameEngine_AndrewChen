@@ -28,6 +28,31 @@ public:
 };
 ECS_DEFINE_TYPE(Sprite2D);
 
+struct Animator
+{
+public:
+	ECS_DECLARE_TYPE;
+	int frameWidth, frameHeight;
+	int currColumn, currRow, totalColumns, totalRows;
+	float currTime, nextFrame;
+	bool facingRight;
+	Animator(
+		int newWidth,int newHeight,
+		float frameWindow,
+		int newColumns,int newRows) {
+		this->frameWidth = newWidth;
+		this->frameHeight = newHeight;
+		currColumn = 0;
+		currRow = 0;
+		this->totalColumns = newColumns;
+		this->totalRows = newRows;
+		this->nextFrame = frameWindow;
+		currTime = 0;
+		facingRight = true;
+	}
+};
+ECS_DEFINE_TYPE(Animator);
+
 struct Collision
 {
 public:
@@ -40,4 +65,4 @@ public:
 		return true;
 	}
 };
-ECS_DEFINE_TYPE(Sprite2D);
+ECS_DEFINE_TYPE(Collision);
