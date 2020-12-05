@@ -1,4 +1,4 @@
-#include "Engine.h"
+#include "../GameEngine_AndrewChen/Engine.h"
 using namespace std;
 int main(int argc, char* args[]) {
 	int width = 800, height = 600;
@@ -18,7 +18,7 @@ int main(int argc, char* args[]) {
 	gameEngine.addSystem(new AnimationSystem());
 	// Create and assign some entities
 
-	bg = gameEngine.world->create();	
+	bg = gameEngine.world->create();
 	first = gameEngine.world->create();
 	tux = gameEngine.world->create();
 	// Assign components
@@ -28,11 +28,11 @@ int main(int argc, char* args[]) {
 
 	first->assign<Transform>(400, 320);
 	first->assign<Sprite2D>("../Debug/Pics/herosheet.png");
-	first->assign<Animator>(32,32,500.0f,4,1);
+	first->assign<Animator>(32, 32, 500.0f, 4, 1);
 
 	tux->assign<Transform>(500, 420);
 	tux->assign<Sprite2D>("../Debug/Pics/penguin.png");
-	tux->assign<Animator>(56, 72, 500.0f, 3, 9);  
+	tux->assign<Animator>(56, 72, 500.0f, 3, 9);
 	tux->get<Animator>()->currRow = 0;
 
 	std::cout << bg->getEntityId() << " is the entity ID" << std::endl;

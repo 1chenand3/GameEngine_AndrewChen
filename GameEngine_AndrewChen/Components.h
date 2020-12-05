@@ -66,3 +66,22 @@ public:
 	}
 };
 ECS_DEFINE_TYPE(Collision);
+
+struct InputControl
+{
+public:
+	ECS_DECLARE_TYPE;
+	bool inputActive;
+	// Keys
+	bool w,a,s,d,enter;
+
+	InputControl() {
+		inputActive = true;
+		w = false;
+		a = false;
+		s = false;
+		d = false;
+		enter = false;
+	}
+};
+ECS_DEFINE_TYPE(InputControl);
