@@ -8,10 +8,23 @@ struct Transform
 public:
 	 ECS_DECLARE_TYPE;
 	 float x, y, rotation, xScale, yScale;
-	 Transform(float x, float y) {
-		 this->x = x;
-		 this->y = y;
+	 float xSpeed, ySpeed;
+	 Transform(float x, float y) : x(x),y(y){
+		 xSpeed = 0;
+		 ySpeed = 0;
 		 this->rotation = .0f;
+	 }
+	 void updateSpeed(float x, float y){
+		 this->xSpeed = x;
+		 this->ySpeed = y;
+	 }
+	 void move() {
+		 x += xSpeed;
+		 y += ySpeed;
+	 }
+	 void stop() {
+		 xSpeed = 0;
+		 ySpeed = 0;
 	 }
 };
 ECS_DEFINE_TYPE(Transform);

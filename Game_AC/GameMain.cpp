@@ -16,6 +16,8 @@ int main(int argc, char* args[]) {
 	// add systems to the engine
 	gameEngine.addSystem(new RenderSystem());
 	gameEngine.addSystem(new AnimationSystem());
+	gameEngine.addSystem(new MovementSystem());
+	gameEngine.addSystem(new InputSystem(&window));
 	// Create and assign some entities
 
 	bg = gameEngine.world->create();
@@ -33,6 +35,7 @@ int main(int argc, char* args[]) {
 	tux->assign<Transform>(500, 420);
 	tux->assign<Sprite2D>("../Debug/Pics/penguin.png");
 	tux->assign<Animator>(56, 72, 500.0f, 3, 9);
+	tux->assign<InputControl>();
 	tux->get<Animator>()->currRow = 0;
 
 	std::cout << bg->getEntityId() << " is the entity ID" << std::endl;
