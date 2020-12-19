@@ -17,7 +17,7 @@ int main(int argc, char* args[]) {
 	gameEngine.addSystem(new RenderSystem());
 	gameEngine.addSystem(new AnimationSystem());
 	gameEngine.addSystem(new MovementSystem());
-	gameEngine.addSystem(new InputSystem(&window));
+	gameEngine.addSystem(new InputSystem(&window));  
 	// Create and assign some entities
 
 	bg = gameEngine.world->create();

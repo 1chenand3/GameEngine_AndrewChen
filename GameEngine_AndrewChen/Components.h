@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "ECS.h"
+//#include <cmath>
 
 struct Transform
 {
@@ -19,6 +20,10 @@ public:
 		 this->ySpeed = y;
 	 }
 	 void move() {
+		 if (xSpeed != 0 && ySpeed != 0) {
+			 xSpeed /= 2;
+			 ySpeed /= 2;
+		 }
 		 x += xSpeed;
 		 y += ySpeed;
 	 }
@@ -66,19 +71,29 @@ public:
 };
 ECS_DEFINE_TYPE(Animator);
 
-struct Collision
+struct CollisionBox
 {
 public:
 	ECS_DECLARE_TYPE;
 	float width, height;
-	Collision() {//int width, int height
-
+	float left, right, top, bottom;
+	CollisionBox() {//int width, int height
+		left = 0;
+		right = 0;
+		top = 0;
+		bottom = 0;
+	}
+	void update(float xSide, float ySide, float width, float height) {
+		left = xSide;
+		right = xSide + width;
+		top = ySide;
+		bottom = ySide + height;
 	}
 	bool detect() {
 		return true;
 	}
 };
-ECS_DEFINE_TYPE(Collision);
+ECS_DEFINE_TYPE(CollisionBox);
 
 struct InputControl
 {
