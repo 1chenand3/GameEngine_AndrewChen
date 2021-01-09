@@ -30,7 +30,7 @@ public:
 		ECS::ComponentHandle<Transform> transform,
 		ECS::ComponentHandle<CollisionBox> main,
 		sf::RectangleShape rect);
-	void checkCollisionSide(
+	void push(
 		ECS::Entity* main,
 		ECS::Entity* touched
 	);
