@@ -2,7 +2,7 @@
 //#include "../Engine.h"
 #include "../ECS.h"
 #include "../Components.h"
-class PhysicsSystem : ECS::EntitySystem
+class PhysicsSystem : public ECS::EntitySystem
 {
 public:
 	PhysicsSystem();

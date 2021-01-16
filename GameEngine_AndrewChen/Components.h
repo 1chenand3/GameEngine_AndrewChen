@@ -75,13 +75,14 @@ struct CollisionBox
 {
 public:
 	ECS_DECLARE_TYPE;
-	float width, height;
+//	float width, height;
 	float left, right, top, bottom;
 	CollisionBox() {//int width, int height
-		left = 0;
-		right = 0;
-		top = 0;
-		bottom = 0;
+		//left = 0;
+		//right = 0;
+		//top = 0;
+		//bottom = 0;
+		std::memset(this, '\0',sizeof(CollisionBox));
 	}
 	void update(float xSide, float ySide, float width, float height) {
 		left = xSide;

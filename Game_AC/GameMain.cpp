@@ -17,7 +17,8 @@ int main(int argc, char* args[]) {
 	gameEngine.addSystem(new RenderSystem());
 	gameEngine.addSystem(new AnimationSystem());
 	gameEngine.addSystem(new MovementSystem());
-	gameEngine.addSystem(new InputSystem(&window));  
+	gameEngine.addSystem(new InputSystem(&window));
+	gameEngine.addSystem(new PhysicsSystem());
 	// Create and assign some entities
 
 	bg = gameEngine.world->create();
@@ -31,12 +32,15 @@ int main(int argc, char* args[]) {
 	first->assign<Transform>(400, 320);
 	first->assign<Sprite2D>("../Debug/Pics/herosheet.png");
 	first->assign<Animator>(32, 32, 500.0f, 4, 1);
+	first->assign<CollisionBox>();
 
 	tux->assign<Transform>(500, 420);
 	tux->assign<Sprite2D>("../Debug/Pics/penguin.png");
 	tux->assign<Animator>(56, 72, 500.0f, 3, 9);
 	tux->assign<InputControl>();
 	tux->get<Animator>()->currRow = 0;
+	tux->assign<CollisionBox>();
+
 
 	std::cout << bg->getEntityId() << " is the entity ID" << std::endl;
 	std::cout << first->getEntityId() << " is the entity ID" << std::endl;
