@@ -26,15 +26,15 @@ int main(int argc, char* args[]) {
 	tux = gameEngine.world->create();
 	// Assign components
 
-	bg->assign<Transform>(0, 0);
+	bg->assign<Transform>(0,0 ,0);
 	bg->assign<Sprite2D>("../Debug/Pics/bg.jpg");
 
-	first->assign<Transform>(400, 320);
+	first->assign<Transform>(400, 320,1);
 	first->assign<Sprite2D>("../Debug/Pics/herosheet.png");
 	first->assign<Animator>(32, 32, 500.0f, 4, 1);
 	first->assign<CollisionBox>();
 
-	tux->assign<Transform>(500, 420);
+	tux->assign<Transform>(500, 420,1);
 	tux->assign<Sprite2D>("../Debug/Pics/penguin.png");
 	tux->assign<Animator>(56, 72, 500.0f, 3, 9);
 	tux->assign<InputControl>();

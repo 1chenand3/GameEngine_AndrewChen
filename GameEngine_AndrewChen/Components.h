@@ -9,8 +9,8 @@ struct Transform
 public:
 	 ECS_DECLARE_TYPE;
 	 float x, y, rotation, xScale, yScale;
-	 float xSpeed, ySpeed;
-	 Transform(float x, float y) : x(x),y(y){
+	 float xSpeed, ySpeed, speedMod;
+	 Transform(float x, float y,float speedMod) : x(x),y(y), speedMod(speedMod){
 		 xSpeed = 0;
 		 ySpeed = 0;
 		 this->rotation = .0f;
