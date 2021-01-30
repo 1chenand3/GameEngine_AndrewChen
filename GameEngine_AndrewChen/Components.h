@@ -8,9 +8,9 @@ struct Transform
 {
 public:
 	 ECS_DECLARE_TYPE;
-	 float x, y, rotation, xScale, yScale;
+	 float x, y, rotation; //xScale, yScale;
 	 float xSpeed, ySpeed, speedMod;
-	 Transform(float x, float y,float speedMod) : x(x),y(y), speedMod(speedMod){
+	 Transform(float x, float y,float speedMod = 0.0f) : x(x),y(y), speedMod(speedMod){
 		 xSpeed = 0;
 		 ySpeed = 0;
 		 this->rotation = .0f;
@@ -114,3 +114,17 @@ public:
 	}
 };
 ECS_DEFINE_TYPE(InputControl);
+
+struct Camera
+{
+public:
+	ECS_DECLARE_TYPE;
+	sf::View view;
+
+	Camera(sf::Vector2f pivot) {
+		view.setCenter(pivot);
+
+	}
+};
+ECS_DEFINE_TYPE(Camera);
+

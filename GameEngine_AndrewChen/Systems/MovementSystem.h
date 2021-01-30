@@ -8,4 +8,3 @@ public:
 	~MovementSystem();
 	void tick(ECS::World* world, float deltaTime)override;
 };
-

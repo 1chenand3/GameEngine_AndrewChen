@@ -8,6 +8,7 @@
 #include "Systems/InputSystem.h"
 #include "Systems/MovementSystem.h"
 #include "Systems/PhysicsSystem.h"
+#include "Interface/MainCamera.h"
 class Engine
 {
 public:
