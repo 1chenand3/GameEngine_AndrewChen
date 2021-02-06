@@ -15,9 +15,13 @@ Engine& Engine::GetInstance(void)
 
 void Engine::Start(sf::RenderWindow* window)
 {
+	camera = MainCamera(sf::Vector2f(
+		window->getSize().x / 2,
+		window->getSize().y / 2
+	));
 	bQuit = false;
-	this -> window = window;
-	while (this -> window -> isOpen()) 
+	this->window = window;
+	while (this->window->isOpen())
 	{
 		Update();
 	}
@@ -27,13 +31,12 @@ void Engine::addSystem(ECS::EntitySystem* newSys)
 {
 	world->registerSystem(newSys);
 	world->enableSystem(newSys);
-	
 }
 
 void Engine::Update()
 {
 	sf::Event event;
-	while (window -> pollEvent(event)) // Any event occur
+	while (window->pollEvent(event)) // Any event occur
 	{
 		// close event
 		// 
@@ -42,14 +45,15 @@ void Engine::Update()
 		switch (event.type)
 		{
 		case sf::Event::Closed:
-			window -> close();
+			window->close();
 			break;
-		case sf::Event::KeyPressed:
-			//cout << "Yes";
-			break;
-		default:
-			break;
+			//case sf::Event::KeyPressed:
+				//cout << "Yes";
+			//	break;
+			//default:
+				//break;
 		}
 	}
-	world -> tick(10.0f);
+	world->tick(1.0f);
+	camera.update(world, 1.0f, window);
 }

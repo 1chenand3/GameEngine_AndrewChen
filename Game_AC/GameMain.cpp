@@ -26,21 +26,25 @@ int main(int argc, char* args[]) {
 	tux = gameEngine.world->create();
 	// Assign components
 
-	bg->assign<Transform>(0,0);
+	bg->assign<Transform>(0, 0);
 	bg->assign<Sprite2D>("../Debug/Pics/bg.jpg");
 
-	first->assign<Transform>(400, 320,0.0f);
+	first->assign<Transform>(100, 50, 0.6f);
 	first->assign<Sprite2D>("../Debug/Pics/herosheet.png");
 	first->assign<Animator>(32, 32, 500.0f, 4, 1);
 	first->assign<CollisionBox>();
 
-	tux->assign<Transform>(50, 50, 1.1f);
+	tux->assign<Transform>(50, 50, 0.6f);
 	tux->assign<Sprite2D>("../Debug/Pics/penguin.png");
 	tux->assign<Animator>(56, 72, 500.0f, 3, 9);
 	tux->assign<InputControl>();
 	tux->get<Animator>()->currRow = 0;
 	tux->assign<CollisionBox>();
-
+	tux->assign<Camera>(sf::Vector2f(
+		window.getSize().x / 2,
+		window.getSize().y / 2
+	));
+	std::cout << tux->get<Transform>()->speedMod;
 
 	std::cout << bg->getEntityId() << " is the entity ID" << std::endl;
 	std::cout << first->getEntityId() << " is the entity ID" << std::endl;
@@ -49,7 +53,4 @@ int main(int argc, char* args[]) {
 	//pass the window refrence to the engine and start
 	gameEngine.Start(&window);
 	return 0;
-}
-int reInt(int i, int i2) {
-	return i + i2;
 }

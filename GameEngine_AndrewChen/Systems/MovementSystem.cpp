@@ -21,12 +21,9 @@ void MovementSystem::tick(ECS::World* world, float deltaTime)
 				if (input->inputActive) {
 					if (input->w) {
 						transform->ySpeed = -transform->speedMod;
-						transform->move();
 					}
-					else if (input->s) { 
-
+					else if (input->s) {
 						transform->ySpeed = transform->speedMod;
-						transform->move();
 					}
 					else transform->ySpeed = 0;
 
@@ -34,18 +31,19 @@ void MovementSystem::tick(ECS::World* world, float deltaTime)
 						animator->facingRight = false;
 						animator->currRow = 1;
 						transform->xSpeed = -transform->speedMod;
-						transform->move();
 					}
 					else if (input->d) {
 						animator->facingRight = true;
 						animator->currRow = 1;
 						transform->xSpeed = transform->speedMod;
-						transform->move();
 					}
 					else {
 						animator->currRow = 0;
 						transform->xSpeed = 0;
 					}
+					transform->move();
 				}
+			//	std::cout << transform->speedMod;
+			//	std::cout << "\n";
 		});
 }

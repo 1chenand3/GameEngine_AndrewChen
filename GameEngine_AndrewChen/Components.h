@@ -77,6 +77,7 @@ public:
 	ECS_DECLARE_TYPE;
 //	float width, height;
 	float left, right, top, bottom;
+	float width, height;
 	CollisionBox() {//int width, int height
 		//left = 0;
 		//right = 0;
@@ -89,6 +90,8 @@ public:
 		right = xSide + width;
 		top = ySide;
 		bottom = ySide + height;
+		this->width = width;
+		this->height = height;
 	}
 	bool detect() {
 		return true;
@@ -123,7 +126,6 @@ public:
 
 	Camera(sf::Vector2f pivot) {
 		view.setCenter(pivot);
-
 	}
 };
 ECS_DEFINE_TYPE(Camera);

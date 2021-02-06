@@ -102,18 +102,26 @@ void PhysicsSystem::push(ECS::Entity* main, ECS::Entity* touched)
 	//touched->get<Transform>()->x += signOf(xSpeed);
 	//touched->get<Transform>()->y += signOf(ySpeed);
 
-	if (xSpeed > 0 && mainX <= touchedX) {
-		touched->get<struct Transform>()->x++;
+	if (xSpeed > 0 && mainX < touchedX) {
+		//touched->get<struct Transform>()->x++;
+		//touched->get<struct Transform>()->x += main->get<Transform>()->speedMod;
+		touched->get<struct Transform>()->x = main->get<CollisionBox>()->right;
 	}
-	else if (xSpeed < 0 && mainX >= touchedX) {
-		touched->get<struct Transform>()->x--;
+	else if (xSpeed < 0 && mainX > touchedX) {
+		//touched->get<struct Transform>()->x--;
+		//touched->get<struct Transform>()->x -= main->get<Transform>()->speedMod;
+		touched->get<struct Transform>()->x = main->get<CollisionBox>()->left - touched->get<CollisionBox>()->width;
 	}
 
-	if (ySpeed > 0 && mainY <= touchedY) {
-		touched->get<struct Transform>()->y++;
+	if (ySpeed > 0 && mainY < touchedY) {
+		//touched->get<struct Transform>()->y++;
+		//touched->get<struct Transform>()->y += main->get<Transform>()->speedMod;
+		touched->get<struct Transform>()->y = main->get<CollisionBox>()->bottom;
 	}
-	else if (ySpeed < 0 && mainY >= touchedY) {
-		touched->get<struct Transform>()->y--;
+	else if (ySpeed < 0 && mainY > touchedY) {
+		//touched->get<struct Transform>()->y--;
+		//touched->get<struct Transform>()->y -= main->get<Transform>()->speedMod;
+		touched->get<struct Transform>()->y = main->get<CollisionBox>()->top - touched->get<CollisionBox>()->height;
 	}
 }
 
@@ -149,6 +157,8 @@ void PhysicsSystem::tick(ECS::World* world, float deltaTime)
 							}
 					});
 		});
+
 	world->each<struct Transform>(
 		[&](ECS::Entity* entity, ECS::ComponentHandle<struct Transform> transform)->void {transform->move(); });
+	std::cout << "Physic Tick\n";
 }

@@ -14,7 +14,9 @@ class Engine
 public:
 	ECS::World* world;
 	sf::RenderWindow* window;
-	
+
+	MainCamera camera;
+
 	static Engine& GetInstance(void);
 
 	void Start(sf::RenderWindow* window);
