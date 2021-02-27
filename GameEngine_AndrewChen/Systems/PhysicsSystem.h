@@ -1,7 +1,6 @@
 #pragma once
-//#include "../Engine.h"
-#include "../ECS.h"
-#include "../Components.h"
+#include "../Engine.h"
+
 class PhysicsSystem : public ECS::EntitySystem
 {
 public:

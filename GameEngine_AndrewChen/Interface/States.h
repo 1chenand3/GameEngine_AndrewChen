@@ -4,6 +4,7 @@ static class States
 public:
 	static bool getPauseState();
 	static void setPauseState(bool pause);
-private:static bool paused;
+private:
+	static bool paused;
 };
 

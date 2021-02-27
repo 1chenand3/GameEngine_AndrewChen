@@ -1,8 +1,10 @@
 #include "States.h"
 
+bool States::paused = false;
+
 bool States::getPauseState()
 {
-	return paused;
+	return States::paused;
 }
 
 void States::setPauseState(bool pause)

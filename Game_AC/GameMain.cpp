@@ -34,7 +34,7 @@ int main(int argc, char* args[]) {
 	first->assign<Animator>(32, 32, 500.0f, 4, 1);
 	first->assign<CollisionBox>();
 
-	tux->assign<Transform>(50, 50, 0.6f);
+	tux->assign<Transform>(50, 50, 2.0f);
 	tux->assign<Sprite2D>("../Debug/Pics/penguin.png");
 	tux->assign<Animator>(56, 72, 500.0f, 3, 9);
 	tux->assign<InputControl>();

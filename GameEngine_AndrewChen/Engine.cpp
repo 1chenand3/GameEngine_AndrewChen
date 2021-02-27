@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "Engine.h"
 
 Engine::Engine(void)
 {
@@ -21,6 +22,7 @@ void Engine::Start(sf::RenderWindow* window)
 	));
 	bQuit = false;
 	this->window = window;
+	pauseMenu = PauseMenu(this->window);
 	while (this->window->isOpen())
 	{
 		Update();
@@ -35,6 +37,7 @@ void Engine::addSystem(ECS::EntitySystem* newSys)
 
 void Engine::Update()
 {
+	system("cls");
 	sf::Event event;
 	while (window->pollEvent(event)) // Any event occur
 	{
@@ -46,6 +49,7 @@ void Engine::Update()
 		{
 		case sf::Event::Closed:
 			window->close();
+			exit(EXIT_SUCCESS);
 			break;
 			//case sf::Event::KeyPressed:
 				//cout << "Yes";
@@ -53,7 +57,17 @@ void Engine::Update()
 			//default:
 				//break;
 		}
+		pauseMenu.update(event, 1.0f, window);
 	}
 	world->tick(1.0f);
 	camera.update(world, 1.0f, window);
+	if (States::getPauseState())
+	{
+		gameInactiveStateActions();
+	}
+}
+
+void Engine::gameInactiveStateActions()
+{
+	pauseMenu.render(window, 1.0f, camera.view.getCenter());
 }

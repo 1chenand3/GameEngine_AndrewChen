@@ -3,12 +3,19 @@
 #include <SFML/Graphics.hpp>
 #include "ECS.h"
 #include "Components.h"
+
 #include "Systems/RenderSystem.h"
 #include "Systems/AnimationSystem.h"
 #include "Systems/InputSystem.h"
 #include "Systems/MovementSystem.h"
 #include "Systems/PhysicsSystem.h"
+
 #include "Interface/MainCamera.h"
+#include "Interface/PauseMenu.h"
+#include "Interface/States.h"
+#include "Interface/ButtonMap.h"
+#include "Interface/Button.h"
+
 class Engine
 {
 public:
@@ -16,6 +23,7 @@ public:
 	sf::RenderWindow* window;
 
 	MainCamera camera;
+	PauseMenu pauseMenu;
 
 	static Engine& GetInstance(void);
 
@@ -31,5 +39,6 @@ private:
 
 	~Engine(void);
 	void Update();
+	void gameInactiveStateActions();
 };
 

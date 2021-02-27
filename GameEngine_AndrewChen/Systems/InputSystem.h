@@ -1,6 +1,6 @@
 #pragma once
-#include "../ECS.h"
-#include "../Components.h"
+#include "../Engine.h"
+
 class InputSystem : public ECS::EntitySystem
 {
 public:
@@ -8,6 +8,7 @@ public:
 	~InputSystem();
 	void tick(ECS::World* world, float deltaTime)override;
 	void getKey(ECS::World* world);
+	bool getJoyAxis(float f);
 private:
 	sf::RenderWindow* window;
 };

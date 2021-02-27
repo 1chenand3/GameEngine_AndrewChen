@@ -2,35 +2,37 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "ECS.h"
+#include "Engine.h"
+#include "Interface/Tile.h"
 //#include <cmath>
 
 struct Transform
 {
 public:
-	 ECS_DECLARE_TYPE;
-	 float x, y, rotation; //xScale, yScale;
-	 float xSpeed, ySpeed, speedMod;
-	 Transform(float x, float y,float speedMod = 0.0f) : x(x),y(y), speedMod(speedMod){
-		 xSpeed = 0;
-		 ySpeed = 0;
-		 this->rotation = .0f;
-	 }
-	 void updateSpeed(float x, float y){
-		 this->xSpeed = x;
-		 this->ySpeed = y;
-	 }
-	 void move() {
-		 if (xSpeed != 0 && ySpeed != 0) {
-			 xSpeed /= 2;
-			 ySpeed /= 2;
-		 }
-		 x += xSpeed;
-		 y += ySpeed;
-	 }
-	 void stop() {
-		 xSpeed = 0;
-		 ySpeed = 0;
-	 }
+	ECS_DECLARE_TYPE;
+	float x, y, rotation; //xScale, yScale;
+	float xSpeed, ySpeed, speedMod;
+	Transform(float x, float y, float speedMod = 0.0f) : x(x), y(y), speedMod(speedMod) {
+		xSpeed = 0;
+		ySpeed = 0;
+		this->rotation = .0f;
+	}
+	void updateSpeed(float x, float y) {
+		this->xSpeed = x;
+		this->ySpeed = y;
+	}
+	void move() {
+		if (xSpeed != 0 && ySpeed != 0) {
+			xSpeed /= 2;
+			ySpeed /= 2;
+		}
+		x += xSpeed;
+		y += ySpeed;
+	}
+	void stop() {
+		xSpeed = 0;
+		ySpeed = 0;
+	}
 };
 ECS_DEFINE_TYPE(Transform);
 struct Sprite2D
@@ -55,9 +57,9 @@ public:
 	float currTime, nextFrame;
 	bool facingRight;
 	Animator(
-		int newWidth,int newHeight,
+		int newWidth, int newHeight,
 		float frameWindow,
-		int newColumns,int newRows) {
+		int newColumns, int newRows) {
 		this->frameWidth = newWidth;
 		this->frameHeight = newHeight;
 		currColumn = 0;
@@ -75,7 +77,7 @@ struct CollisionBox
 {
 public:
 	ECS_DECLARE_TYPE;
-//	float width, height;
+	//	float width, height;
 	float left, right, top, bottom;
 	float width, height;
 	CollisionBox() {//int width, int height
@@ -83,7 +85,7 @@ public:
 		//right = 0;
 		//top = 0;
 		//bottom = 0;
-		std::memset(this, '\0',sizeof(CollisionBox));
+		std::memset(this, '\0', sizeof(CollisionBox));
 	}
 	void update(float xSide, float ySide, float width, float height) {
 		left = xSide;
@@ -105,15 +107,15 @@ public:
 	ECS_DECLARE_TYPE;
 	bool inputActive;
 	// Keys
-	bool w,a,s,d,enter;
+	bool up, left, down, right, confirm;
 
 	InputControl() {
 		inputActive = true;
-		w = false;
-		a = false;
-		s = false;
-		d = false;
-		enter = false;
+		up = false;
+		left = false;
+		down = false;
+		right = false;
+		confirm = false;
 	}
 };
 ECS_DEFINE_TYPE(InputControl);
@@ -130,3 +132,25 @@ public:
 };
 ECS_DEFINE_TYPE(Camera);
 
+struct TileMap
+{
+public:
+	ECS_DECLARE_TYPE;
+	float gridSize; // For setting the size
+	unsigned int gridSizeU; // 
+	unsigned int layer; // Rendering in order
+	sf::Vector2u maxSize; // set the size
+	sf::RectangleShape collisionBox;
+
+	std::vector<std::vector<std::vector<Tile*>>> map;
+
+	TileMap() {
+		this->gridSize = 15;
+		this->gridSizeU = static_cast<unsigned int>(this->gridSize);
+		this->maxSize.x = 20;
+		this->maxSize.y = 20;
+		this->layer = 1;
+		this->map.resize(this->maxSize.x);
+	}
+};
+ECS_DEFINE_TYPE(TileMap);

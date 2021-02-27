@@ -1,4 +1,5 @@
 #include "PhysicsSystem.h"
+#include "../Interface/States.h"
 
 PhysicsSystem::PhysicsSystem()
 {
@@ -137,28 +138,31 @@ int signOf(double d) {
 
 void PhysicsSystem::tick(ECS::World* world, float deltaTime)
 {
-	world->each<struct CollisionBox, Sprite2D, struct Transform>(
-		[&](ECS::Entity* entity, ECS::ComponentHandle<struct CollisionBox> box, ECS::ComponentHandle<Sprite2D> sprite, ECS::ComponentHandle<struct Transform> transform
-			) -> void {
-				box->update(transform->x, transform->y, sprite->sprite.getTextureRect().width, sprite->sprite.getTextureRect().height);
-		});
+	if (!States::getPauseState())
+	{
+		world->each<struct CollisionBox, Sprite2D, struct Transform>(
+			[&](ECS::Entity* entity, ECS::ComponentHandle<struct CollisionBox> box, ECS::ComponentHandle<Sprite2D> sprite, ECS::ComponentHandle<struct Transform> transform
+				) -> void {
+					box->update(transform->x, transform->y, sprite->sprite.getTextureRect().width, sprite->sprite.getTextureRect().height);
+			});
 
-	world->each<struct CollisionBox, struct Transform>(
-		[&](ECS::Entity* main, ECS::ComponentHandle<struct CollisionBox> mainBox, ECS::ComponentHandle<struct Transform> transform1
-			) -> void {
-				world->each<struct CollisionBox, struct Transform>(
-					[&](ECS::Entity* touched, ECS::ComponentHandle<struct CollisionBox> touchedBox, ECS::ComponentHandle<struct Transform> transform2
-						) -> void {
-							// Avoid same entity
-							if (main->getEntityId() != touched->getEntityId()) {
-								if (collided(mainBox, touchedBox)) {
-									push(main, touched);
+		world->each<struct CollisionBox, struct Transform>(
+			[&](ECS::Entity* main, ECS::ComponentHandle<struct CollisionBox> mainBox, ECS::ComponentHandle<struct Transform> transform1
+				) -> void {
+					world->each<struct CollisionBox, struct Transform>(
+						[&](ECS::Entity* touched, ECS::ComponentHandle<struct CollisionBox> touchedBox, ECS::ComponentHandle<struct Transform> transform2
+							) -> void {
+								// Avoid same entity
+								if (main->getEntityId() != touched->getEntityId()) {
+									if (collided(mainBox, touchedBox)) {
+										push(main, touched);
+									}
 								}
-							}
-					});
-		});
+						});
+			});
 
-	world->each<struct Transform>(
-		[&](ECS::Entity* entity, ECS::ComponentHandle<struct Transform> transform)->void {transform->move(); });
-	std::cout << "Physic Tick\n";
+		world->each<struct Transform>(
+			[&](ECS::Entity* entity, ECS::ComponentHandle<struct Transform> transform)->void {transform->move(); });
+		std::cout << "Physic Tick\n";
+	}
 }
