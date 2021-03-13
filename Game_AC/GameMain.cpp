@@ -19,6 +19,7 @@ int main(int argc, char* args[]) {
 	gameEngine.addSystem(new MovementSystem());
 	gameEngine.addSystem(new InputSystem(&window));
 	gameEngine.addSystem(new PhysicsSystem());
+	gameEngine.addSystem(new TileMapSystem());
 	// Create and assign some entities
 
 	bg = gameEngine.world->create();
@@ -27,7 +28,8 @@ int main(int argc, char* args[]) {
 	// Assign components
 
 	bg->assign<Transform>(0, 0);
-	bg->assign<Sprite2D>("../Debug/Pics/bg.jpg");
+	bg->assign<Sprite2D>("../Debug/Pics/bg.jpg"); 
+	bg->assign<TileMap>();
 
 	first->assign<Transform>(100, 50, 0.6f);
 	first->assign<Sprite2D>("../Debug/Pics/herosheet.png");

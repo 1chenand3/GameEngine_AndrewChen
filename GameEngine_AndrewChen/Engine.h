@@ -9,6 +9,7 @@
 #include "Systems/InputSystem.h"
 #include "Systems/MovementSystem.h"
 #include "Systems/PhysicsSystem.h"
+#include "Systems/TileMapSystem.h"
 
 #include "Interface/MainCamera.h"
 #include "Interface/PauseMenu.h"

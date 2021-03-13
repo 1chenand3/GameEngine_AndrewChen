@@ -9,9 +9,11 @@ void TileMapSystem::tick(ECS::World * world, float deltaTime)
 	Engine::GetInstance().world->each<TileMap>(
 		[&](ECS::Entity* entity, ECS::ComponentHandle<TileMap> tileMap) -> void {
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				std::cout << "ADD";
 				addTileOnClick(true, tileMap);
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+				std::cout << "ADD NO COL";
 				addTileOnClick(false, tileMap);
 			}
 			if (ButtonMap::getMap()["Save"]->clicked) {
@@ -30,5 +32,5 @@ void TileMapSystem::addTileOnClick(bool hasCollision, ECS::ComponentHandle<TileM
 	sf::RenderWindow* window = Engine::GetInstance().window;
 	sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 	sf::Vector2i mouseGrid(static_cast<int>(mousePos.x / tileMap->gridSize), static_cast<int>(mousePos.y / tileMap->gridSize));
-	tileMap->addTile(mouseGrid.x, mouseGrid.y, hasCollision);
+	tileMap->addTile(mouseGrid.x, mouseGrid.y, 0, hasCollision);
 }

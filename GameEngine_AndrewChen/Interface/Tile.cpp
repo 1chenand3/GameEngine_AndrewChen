@@ -30,6 +30,7 @@ const sf::Vector2f& Tile::getPosition() const
 std::string Tile::toString()
 {
 	std::stringstream stringForm;
+	// X Y
 	stringForm << this->colliding << " ";
 	return stringForm.str();
 }

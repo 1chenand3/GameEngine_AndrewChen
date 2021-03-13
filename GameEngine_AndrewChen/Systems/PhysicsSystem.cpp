@@ -140,7 +140,7 @@ void PhysicsSystem::tick(ECS::World* world, float deltaTime)
 {
 	if (!States::getPauseState())
 	{
-		world->each<struct CollisionBox, Sprite2D, struct Transform>(
+		world->each<struct CollisionBox, struct Sprite2D, struct Transform>(
 			[&](ECS::Entity* entity, ECS::ComponentHandle<struct CollisionBox> box, ECS::ComponentHandle<Sprite2D> sprite, ECS::ComponentHandle<struct Transform> transform
 				) -> void {
 					box->update(transform->x, transform->y, sprite->sprite.getTextureRect().width, sprite->sprite.getTextureRect().height);

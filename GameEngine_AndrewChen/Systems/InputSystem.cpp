@@ -30,16 +30,16 @@ void InputSystem::getKey(ECS::World* world)
 			[&](ECS::Entity* entity,
 				ECS::ComponentHandle<InputControl> input) -> void {
 					//	if (sf::Joystick::isConnected(0)) {
-					input->up = -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) >= 50;
+				/*	input->up = -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) >= 50;
 					input->down = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) >= 50;
 					input->left = -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) >= 50;
 					input->right = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) >= 50;
 					//}
-					//else {
-					//	input->uo = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
-					//	input->left = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-					//	input->down = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
-					//	input->right = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+					//else {*/
+					input->up = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+						input->left = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+						input->down = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
+						input->right = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
 					//}
 			});
 }

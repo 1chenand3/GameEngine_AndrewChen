@@ -35,6 +35,24 @@ void RenderSystem::tick(ECS::World* world, float delTime)
 			}
 
 		);
+		world->each<TileMap>([&](ECS::Entity* entity, ECS::ComponentHandle<TileMap> tileMap)-> void {
+			// Loop through each tile and render them
+			// Looping through a vector that stores a vector that store a tile map
+			for (auto& x : tileMap->map) {
+				for (auto& y : x) {
+					for (auto& z : y) {
+						if (z != nullptr) {
+							sf::RenderWindow* winRef = Engine::GetInstance().window;
+							winRef->draw(z->shape);
+							if (z->getCollision()) {
+								tileMap->collisionBox.setPosition(z->getPosition());
+								winRef->draw(tileMap->collisionBox);
+							}
+						}
+					}
+				}
+			}
+			});
 		Engine::GetInstance().window->display();
 	}
 }

@@ -36,7 +36,7 @@ void PauseMenu::update(sf::Event event, float deltaTime, sf::RenderWindow * wind
 void PauseMenu::render(sf::RenderWindow * window, float deltaTime, sf::Vector2f resumePosition)
 {
 	sf::Font font;
-	font.loadFromFile("../Debug/Fonts/coure.fon");
+	font.loadFromFile("../Debug/Fonts/arial.ttf");
 	sf::Vector2f sizeOffset = sf::Vector2f(ButtonMap::getMap()["Resume"]->buttonBG.getSize().x / 2, ButtonMap::getMap()["Resume"]->buttonBG.getSize().y / 2);
 	ButtonMap::getMap()["Resume"]->buttonBG.setPosition(resumePosition + sf::Vector2f(0, -80) - sizeOffset);
 	ButtonMap::getMap()["Resume"]->buttonText.setFont(font);
