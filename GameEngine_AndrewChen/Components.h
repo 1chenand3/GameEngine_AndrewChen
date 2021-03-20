@@ -14,22 +14,26 @@ public:
 	ECS_DECLARE_TYPE;
 	float x, y, rotation; //xScale, yScale;
 	float xSpeed, ySpeed, speedMod;
+	bool collision;
 	Transform(float x, float y, float speedMod = 0.0f) : x(x), y(y), speedMod(speedMod) {
 		xSpeed = 0;
 		ySpeed = 0;
 		this->rotation = .0f;
+		collision = false;
 	}
 	void updateSpeed(float x, float y) {
 		this->xSpeed = x;
 		this->ySpeed = y;
 	}
 	void move() {
-		if (xSpeed != 0 && ySpeed != 0) {
-			xSpeed /= 2;
-			ySpeed /= 2;
+		if (!collision) {
+			if (xSpeed != 0 && ySpeed != 0) {
+				xSpeed /= 2;
+				ySpeed /= 2;
+			}
+			x += xSpeed;
+			y += ySpeed;
 		}
-		x += xSpeed;
-		y += ySpeed;
 	}
 	void stop() {
 		xSpeed = 0;
@@ -89,7 +93,7 @@ public:
 		//bottom = 0;
 		std::memset(this, '\0', sizeof(CollisionBox));
 	}
-	void update(float xSide, float ySide, float width, float height) {
+	void update(int xSide, int ySide, int width, int height) {
 		left = xSide;
 		right = xSide + width;
 		top = ySide;

@@ -18,6 +18,10 @@ public:
 	);
 	bool collided(
 		ECS::ComponentHandle<CollisionBox> main,
+		sf::RectangleShape rect
+	);
+	bool collided(
+		ECS::ComponentHandle<CollisionBox> main,
 		ECS::ComponentHandle<CollisionBox> touched
 	);
 	void checkCollisionSide(

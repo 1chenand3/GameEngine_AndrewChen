@@ -37,6 +37,20 @@ bool PhysicsSystem::collided(ECS::ComponentHandle<struct CollisionBox> main, sf:
 	return false;
 }
 
+bool PhysicsSystem::collided(ECS::ComponentHandle<CollisionBox> main, sf::RectangleShape rect)
+{
+	float _touchedRectLeft = rect.getPosition().x;
+	float _touchedRectRight = _touchedRectLeft + rect.getGlobalBounds().width;
+	float _touchedRectTop = rect.getPosition().y;
+	float _touchedRectBottom = _touchedRectTop + rect.getGlobalBounds().height;
+
+	return main->right > _touchedRectLeft &&
+		_touchedRectRight > main->left &&
+		main->bottom > _touchedRectTop &&
+		_touchedRectBottom > main->top;
+
+}
+
 bool PhysicsSystem::collided(ECS::ComponentHandle<struct CollisionBox> main, ECS::ComponentHandle<struct CollisionBox> touched)
 {
 	return main->right > touched->left && touched->right > main->left && main->bottom > touched->top && touched->bottom > main->top;
@@ -72,23 +86,39 @@ void PhysicsSystem::checkCollisionSide(ECS::ComponentHandle<struct Transform> tr
 	float rectTop = rect.getPosition().y;
 	float rectBottom = rectTop + rect.getGlobalBounds().height;
 	// Going Right
-	if (transform->xSpeed > 0 && main->right + transform->xSpeed > rectLeft && main->top < rectBottom && main->bottom>rectTop) {
+	if (transform->xSpeed > 0 && main->right + transform->xSpeed > rectLeft &&
+		main->left < rectRight && 
+		main->top < rectBottom && main->bottom>rectTop) {
 		transform->xSpeed = 0;
+		transform->x = rectLeft - 56;
+		transform->collision = true;
 	}
 
 	// Going Left
-	if (transform->xSpeed < 0 && main->left + transform->xSpeed < rectRight && main->top < rectBottom && main->bottom>rectTop) {
+	if (transform->xSpeed < 0 && main->left + transform->xSpeed < rectRight && 
+		main->right > rectLeft &&
+		main->top < rectBottom && main->bottom>rectTop) {
 		transform->xSpeed = 0;
+		transform->x = rectRight;
+		transform->collision = true;
 	}
 
 	// Going Down
-	if (transform->ySpeed > 0 && main->bottom + transform->ySpeed > rectTop && main->left < rectRight && main->right>rectLeft) {
+	if (transform->ySpeed > 0 && main->bottom + transform->ySpeed > rectTop && 
+		main->top < rectBottom &&
+		main->left < rectRight && main->right>rectLeft) {
 		transform->ySpeed = 0;
+		transform->y = rectTop - 72;
+		transform->collision = true;
 	}
 
 	// Going Up
-	if (transform->ySpeed < 0 && main->top + transform->ySpeed < rectBottom && main->left < rectRight && main->right>rectLeft) {
+	if (transform->ySpeed < 0 && main->top + transform->ySpeed < rectBottom && 
+		main->bottom > rectTop &&
+		main->left < rectRight && main->right>rectLeft) {
 		transform->ySpeed = 0;
+		transform->y = rectBottom;
+		transform->collision = true;
 	}
 }
 
@@ -149,13 +179,33 @@ void PhysicsSystem::tick(ECS::World* world, float deltaTime)
 		world->each<struct CollisionBox, struct Transform>(
 			[&](ECS::Entity* main, ECS::ComponentHandle<struct CollisionBox> mainBox, ECS::ComponentHandle<struct Transform> transform1
 				) -> void {
-					world->each<struct CollisionBox, struct Transform>(
-						[&](ECS::Entity* touched, ECS::ComponentHandle<struct CollisionBox> touchedBox, ECS::ComponentHandle<struct Transform> transform2
+					world->each<struct CollisionBox>(
+						[&](ECS::Entity* touchedEntity, ECS::ComponentHandle<struct CollisionBox> touchedBox) -> void {
+							// Avoid same entity
+							if (main->getEntityId() == touchedEntity->getEntityId()) {
+								return;
+							}
+							if (!collided(mainBox, touchedBox)) {
+								return;
+							}
+							push(main, touchedEntity);
+						});
+					world->each<struct TileMap>(
+						[&](ECS::Entity* tileMapE, ECS::ComponentHandle<struct TileMap> tileMap
 							) -> void {
-								// Avoid same entity
-								if (main->getEntityId() != touched->getEntityId()) {
-									if (collided(mainBox, touchedBox)) {
-										push(main, touched);
+								transform1->collision = false;
+								for (auto& x : tileMap->map) {
+									for (auto& y : x) {
+										for (auto& z : y) {
+											if (z == nullptr || !z->colliding) { continue; }
+											// Check future position
+											//if (collided(mainBox, z->shape, transform1->xSpeed, transform1->ySpeed)) {
+												
+												//transform1->collision = true;
+												//std::cout << "Collided\n"; 
+												checkCollisionSide(transform1, mainBox, z->shape);
+											//}
+										}
 									}
 								}
 						});
